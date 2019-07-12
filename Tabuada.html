@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    
+    <title>Tabuada</title>
+    
+    <style type="text/css">
+        
+        #tabelaTabuada{
+            text-align: center;
+        }
+
+        #tabelaTabuada td{
+            padding: 0.16em;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <header>
+        <!--TODO HEADER MENU-->
+    </header>
+
+    <h1>Tabuada</h1>
+
+    <div>
+        <h4>Hora Atual: <span id="data"></span></h4>
+    </div>
+
+    <div>
+        <p>Digite o número desejado</p>
+        <input 
+            type="text" 
+            id="inputNumero" 
+            placeholder="Digite o número desejado" 
+            onkeydown="return 
+            processKey(event)"
+        />
+        <button 
+            type="button" 
+            onclick="inserirTabuada();"
+        >
+            Calcular
+        </button>
+    </div>
+    
+    <br />
+
+    <div id="tabelaTabuada" hidden>
+        <table>
+            <thead>
+                <th>
+                    <tr>
+                        <td>
+                            Tabuada do <span id="numero"></span>
+                        </td>
+                        <td>
+                            =
+                        </td>
+                        <td>
+                            Resultado
+                        </td>
+                    </tr>
+                </th>
+            </thead>
+        
+            <tbody id="bodyTabuada"></tbody>
+        
+        </table>
+    </div>
+</body>
+
+<footer>
+    <div>
+        <p>Copyright &copy; FR4Geek 2019</p>
+    </div>
+</footer>
+
+<script>
+    var bodyTabuada = document.querySelector("#bodyTabuada");
+    document.querySelector("#data").innerHTML = formatarData();
+    document.querySelector("#inputNumero").focus();
+
+    function processKey(e)
+    {
+        if (null == e) {
+            e = window.event ;
+        } else if (e.keyCode == 13) {
+            inserirTabuada();
+        }
+    }
+
+    function inserirTabuada(){
+        document.querySelector("#tabelaTabuada").removeAttribute("hidden");
+
+        var numero = document.querySelector("#inputNumero");
+        
+        bodyTabuada.innerHTML = "";
+        document.querySelector("#numero").innerHTML = numero.value;
+
+        if(!isNaN(numero.value)){
+            for(var i = 0; i <=10; i++){
+                bodyTabuada.innerHTML += 
+                    "<tr>" 
+                    + insertData(numero.value, i) 
+                    + "</tr>";
+            };
+        } else {
+            alert("! Atenção ! Utilize somente números!")
+        }
+
+        numero.value = "";
+        numero.focus();
+
+        document.querySelector("#data").innerHTML = formatarData();
+    }
+
+    function Calcular(dividendo, divisor){
+        return 
+            dividendo * divisor;
+    }
+
+    function insertData(dividendo, divisor){
+        return 
+            "<td>" 
+            + dividendo 
+            + " x " 
+            + divisor 
+            + "</td><td>=</td><td>" 
+            + Calcular(dividendo, divisor) 
+            + "</td>"
+    }
+
+    function formatarZeros(numeroData){
+        return 
+            numeroData <= 9 ? 
+            "0" + numeroData 
+            : numeroData;
+    }
+
+    function formatarData(){
+        return 
+            Data() 
+            + " " 
+            + Hora(); 
+    };
+
+    function Data(){
+        return 
+            formatarZeros(new Date().getDay()) 
+            + "/" 
+            + formatarZeros(new Date().getMonth()) 
+            + "/" 
+            + new Date().getFullYear();
+    }
+
+    function Hora(){
+        return 
+            formatarZeros(new Date().getHours()) 
+            + ":" 
+            + formatarZeros(new Date().getMinutes()) 
+            + ":" 
+            + formatarZeros(new Date().getSeconds());
+    }
+</script>
