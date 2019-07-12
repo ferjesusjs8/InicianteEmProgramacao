@@ -34,8 +34,7 @@
             type="text" 
             id="inputNumero" 
             placeholder="Digite o número desejado" 
-            onkeydown="return 
-            processKey(event)"
+            onkeydown="return processKey(event)"
         />
         <button 
             type="button" 
@@ -85,7 +84,7 @@
     function processKey(e)
     {
         if (null == e) {
-            e = window.event ;
+            e = window.event;
         } else if (e.keyCode == 13) {
             inserirTabuada();
         }
@@ -117,50 +116,26 @@
     }
 
     function Calcular(dividendo, divisor){
-        return 
-            dividendo * divisor;
+        return dividendo * divisor;
     }
 
     function insertData(dividendo, divisor){
-        return 
-            "<td>" 
-            + dividendo 
-            + " x " 
-            + divisor 
-            + "</td><td>=</td><td>" 
-            + Calcular(dividendo, divisor) 
-            + "</td>"
+        return "<td>" + dividendo + " x " + divisor + "</td><td>=</td><td>" + Calcular(dividendo, divisor) + "</td>";
     }
 
     function formatarZeros(numeroData){
-        return 
-            numeroData <= 9 ? 
-            "0" + numeroData 
-            : numeroData;
+        return numeroData <= 9 ? "0" + numeroData : numeroData;
     }
 
     function formatarData(){
-        return 
-            Data() 
-            + " " 
-            + Hora(); 
+        return Data() + " " + Hora(); 
     };
 
     function Data(){
-        return 
-            formatarZeros(new Date().getDay()) 
-            + "/" 
-            + formatarZeros(new Date().getMonth()) 
-            + "/" 
-            + new Date().getFullYear();
+        return formatarZeros(new Date().getDay()) + "/" + formatarZeros(new Date().getMonth()) + "/" + new Date().getFullYear();
     }
 
     function Hora(){
-        return 
-            formatarZeros(new Date().getHours()) 
-            + ":" 
-            + formatarZeros(new Date().getMinutes()) 
-            + ":" 
-            + formatarZeros(new Date().getSeconds());
+        return formatarZeros(new Date().getHours()) + ":" + formatarZeros(new Date().getMinutes()) + ":" + formatarZeros(new Date().getSeconds());
     }
 </script>
