@@ -3,6 +3,8 @@
 <script>
 
     function Jogar(){
+        debugger;
+
         var nomeAdivinhador = prompt("Qual o seu nome?");
         
         while(!nomeAdivinhador){
@@ -15,22 +17,66 @@
             numeroAdivinhador = parseInt(prompt("Pare de enrolar e diga agora um número, humano!"));
         }
 
-        var numeroSorteado = SorteaNumero();
+        var quantidadeNumeros = parseInt(prompt("Qual a quantidade de números você deseja que eu sorteie?"));
+
+        while(!quantidadeNumeros && isNaN(quantidadeNumeros)){
+            quantidadeNumeros = parseInt(prompt("Pare de enrolar e diga agora um número, humano!"));
+        }
+
+        var numerosSorteados = SortearNumeros(quantidadeNumeros);
         
-        MostrarResultado(nomeAdivinhador, numeroAdivinhador, numeroSorteado);
+        MostrarResultado(nomeAdivinhador, numeroAdivinhador, numerosSorteados);
         Terminar(nomeAdivinhador);
     }
 
     function Mostra(frase){
+        
         alert(frase);
     };
 
-    function SorteaNumero(){
-       return Math.round(Math.random() * 10);
+    function SortearNumeros(quantidadeNumeros){
+        
+        var numeros = [];
+
+        while(numeros.length < quantidadeNumeros){
+            
+            var numeroSorteado = Math.round(Math.random() * 10);
+            var existe = false;
+            
+            for(var i = 0; i <= numeros.length; i++){
+                
+                if(numeros[i] == numeroSorteado){
+                    
+                    existe = true;
+
+                    break;
+                }
+            }
+
+            if(!existe){
+                numeros.push(numeroSorteado);
+            }
+
+        }
+        
+        return numeros;
     }
 
-    function Acertou(guess, passNumber){
-        return guess == passNumber;
+    function Acertou(guess, passNumbers){
+        
+        var acertou = false;
+        
+        for(var i = 0; i < passNumbers.length; i++){
+        
+            acertou = guess == passNumbers[i];
+            
+            if(acertou){
+        
+                break;
+            }
+        }
+        
+        return acertou;
     }
 
     function ContinuarJogando(continua){
@@ -41,23 +87,32 @@
         }
     }
 
-    function MostrarResultado(nomeAdivinhador, numeroAdivinhador, numeroSorteado){
-        if(Acertou(numeroAdivinhador, numeroSorteado)){
-            Mostra(nomeAdivinhador + ", você definitivamente é um MAGO das adivinhações! MESTRE! Conseguiu acertar o número secretamente mágico de uma vez! INCRÍVEL!\nVocê disse " + numeroAdivinhador + "!\nE eu pensei exatamente em " + numeroSorteado + "! Acredita Nisso!\nVO-CÊ É TOP DE-MA-IS! QUE EMOÇÃO GENTEEE! <3\nAI TE AMO <3\n\n#muitoBom #TOPDEMAIS! #teAmo<3!");
+    function MostrarResultado(nomeAdivinhador, numeroAdivinhador, numerosSorteados){
+        if(Acertou(numeroAdivinhador, numerosSorteados)){
+            Mostra(nomeAdivinhador + ", você definitivamente é um MAGO das adivinhações! MESTRE! Conseguiu acertar o número secretamente mágico de uma vez! INCRÍVEL!\nVocê disse " + numeroAdivinhador + "!\nE eu pensei exatamente em " + MostrarNumeros(numerosSorteados) + "! Acredita Nisso!\nVO-CÊ É TOP DE-MA-IS! QUE EMOÇÃO GENTEEE! <3\nAI TE AMO <3\n\n#muitoBom #TOPDEMAIS! #teAmo<3!");
         } else {
-            Mostra(nomeAdivinhador + ", seu palpite foi " + numeroAdivinhador + ", mas eu pensei em " + numeroSorteado + ", que pena viu :_(\n#chatiado #muitoTistiComTudoIsso");
+            Mostra(nomeAdivinhador + ", seu palpite foi " + numeroAdivinhador + ", mas eu pensei nos seguintes números: " + MostrarNumeros(numerosSorteados) + ", que pena viu :_(\n#chatiado #muitoTistiComTudoIsso");
         }
+    }
+
+    function MostrarNumeros(numeros){
+        var mensagem = "";
+        
+        for(var i = 0; i < numeros.length; i++){
+            mensagem += numeros[i] + ", ";
+        }
+
+        return mensagem;
     }
 
     function Terminar(nomeDoHumano){
         ContinuarJogando(confirm(nomeDoHumano + ", não desista dos seus Sonhos!\nQuer jogar mais uma comigo? hahaha :D"));
     }
 
-
     /*
         BORA JOGAR !!!
     */
-
+    debugger;
     Jogar();
 
 </script>
